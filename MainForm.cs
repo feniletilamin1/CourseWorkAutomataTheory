@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -62,6 +56,34 @@ namespace CourwWorkAutomataTheory
                 {
                     dataGridView3.Rows.Add();
                 }
+
+                list2 = lexeme.GetTccTable();
+
+                foreach (var item in list2)
+                {
+                    dataGridView2.Rows.Add(item.Item1, item.Item2);
+                }
+
+                for (int i = 0; i < lexeme.keyWords.Count; i++)
+                {
+                    dataGridView3.Rows[i].Cells[0].Value = lexeme.keyWords[i];
+                }
+
+                for (int i = 0; i < lexeme.literals.Count; i++)
+                {
+                    dataGridView3.Rows[i].Cells[1].Value = lexeme.literals[i];
+                }
+
+                for (int i = 0; i < lexeme.indentificators.Count; i++)
+                {
+
+                    dataGridView3.Rows[i].Cells[2].Value = lexeme.indentificators[i];
+                }
+
+                for (int i = 0; i < lexeme.limiters.Count; i++)
+                {
+                    dataGridView3.Rows[i].Cells[3].Value = lexeme.limiters[i];
+                }
             }
             catch (Exception exeption)
             {
@@ -70,6 +92,7 @@ namespace CourwWorkAutomataTheory
                 MessageBox.Show(exeption.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         int GetMax()
         {

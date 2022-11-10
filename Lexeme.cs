@@ -212,5 +212,71 @@ namespace CourwWorkAutomataTheory
             }
             return symType;
         }
+
+        public List<Tuple<string, int>> GetTccTable()
+        {
+            List<Tuple<string, int>> resultList = new List<Tuple<string, int>>();
+            foreach (var item in lexemes)
+            {
+                string value = item.Item1;
+                string type = item.Item2;
+
+
+                switch (type)
+                {
+                    case "Идентификатор":
+                        if (keyWords.Contains(value))
+                        {
+                            resultList.Add(new Tuple<string, int>("K", keyWords.IndexOf(value)));
+                        }
+                        else if (!keyWords.Contains(value))
+                        {
+                            if (value.Length <= 6)
+                            {
+                                if (!indentificators.Contains(value))
+                                {
+                                    indentificators.Add(value);
+                                    resultList.Add(new Tuple<string, int>("I", indentificators.IndexOf(value)));
+                                }
+                                else
+                                {
+                                    resultList.Add(new Tuple<string, int>("I", indentificators.IndexOf(value)));
+                                }
+                            }
+
+                            else
+                            {
+                                throw new Exception("Имя переменной не должна превышать длину 6-ти символов");
+                            }
+                        }
+                        break;
+                    case "Литерал":
+                        int intValue = int.Parse(value);
+                        if (!literals.Contains(intValue))
+                        {
+                            literals.Add(intValue);
+                            resultList.Add(new Tuple<string, int>("L", literals.IndexOf(intValue)));
+                        }
+                        else
+                        {
+                            resultList.Add(new Tuple<string, int>("L", literals.IndexOf(intValue)));
+                        }
+                        break;
+                    case "Разделитель":
+                        if (value.Length <= 2)
+                        {
+                            resultList.Add(new Tuple<string, int>("R", limiters.IndexOf(value[0])));
+                        }
+                        else
+                        {
+                            throw new Exception("Длина разделителя не превышает 2-ух симоволов");
+                        }
+
+                        break;
+                }
+            }
+            return resultList;
+        }
     }
+
 }
