@@ -10,7 +10,7 @@ namespace CourwWorkAutomataTheory
 
         public readonly List<int> literals = new List<int>();
         public readonly List<string> indentificators = new List<string>();
-        public readonly List<char> limiters = new List<char>() { '=', '<', '>', '+', '-', '*', '/', '\n' };
+        public readonly List<char> limiters = new List<char>() { '=', '<', '>', '+', '-', '*', '/', '\n', '(', ')' };
         public readonly List<string> keyWords = new List<string>() { "Dim", "as", "integer", "char", "single", "string", "if", "then", "else", "end" };
         public readonly List<Tuple<string, string>> lexemes = new List<Tuple<string, string>>();
 
@@ -94,7 +94,6 @@ namespace CourwWorkAutomataTheory
 
                         break;
 
-
                     case "Lemiter":
 
                         if (symbol == '\n')
@@ -137,7 +136,8 @@ namespace CourwWorkAutomataTheory
                                 break;
 
                             case TypeOfLexem.R:
-                                buffer += symbol;
+                                lexemes.Add(new Tuple<string, string>(buffer, "Разделитель"));
+                                buffer = symbol.ToString();
                                 break;
                         }
 
