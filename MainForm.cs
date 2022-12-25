@@ -8,13 +8,13 @@ namespace CourwWorkAutomataTheory
 {
     public partial class MainForm : Form
     {
-        readonly Lexeme lexeme = new Lexeme();
+        SyntaxAnalyzer syntax = new SyntaxAnalyzer();
+        readonly LexemeAnalyzer lexeme = new LexemeAnalyzer();
         List<Tuple<string, string>> list = new List<Tuple<string, string>>();
         List<Tuple<string, int>> list2 = new List<Tuple<string, int>>();
         public MainForm()
         {
             InitializeComponent();
-
             richTextBox1.Text = File.ReadAllText(@"C:\Users\PC\Documents\Курсовая Автоматы\CourseWork\CourseWorkAutomataTheory\bin\Debug\code.txt"); // <<<<<<<<<<<<<<<<<<<<<
         }
 
@@ -32,9 +32,8 @@ namespace CourwWorkAutomataTheory
         {
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
-
-            try
-            {
+            try { 
+            
                 list = lexeme.GetLexeme(richTextBox1.Text);
 
                 foreach (var item in list)
@@ -82,14 +81,34 @@ namespace CourwWorkAutomataTheory
 
                 for (int i = 0; i < lexeme.limiters.Count; i++)
                 {
-                    dataGridView3.Rows[i].Cells[3].Value = lexeme.limiters[i];
+                    if (lexeme.limiters[i] != "\n")
+                    {
+                        dataGridView3.Rows[i].Cells[3].Value = lexeme.limiters[i];
+                    }
+
+                    else
+                    {
+                        dataGridView3.Rows[i].Cells[3].Value = "\\n";
+                    }
                 }
             }
-            catch (Exception exeption)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dataGridView1.Rows.Clear();
                 dataGridView2.Rows.Clear();
-                MessageBox.Show(exeption.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                syntax.CheckSyntax(list2, lexeme);
+                MessageBox.Show("Разбор прошёл успешно", "Успешно!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

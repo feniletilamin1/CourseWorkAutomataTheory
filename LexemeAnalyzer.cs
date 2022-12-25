@@ -4,16 +4,15 @@ using System.Text.RegularExpressions;
 
 namespace CourwWorkAutomataTheory
 {
-    class Lexeme
+    public class LexemeAnalyzer
     {
         readonly string pattern = @"\p{IsCyrillic}";
 
-        public readonly List<int> literals = new List<int>();
+        public readonly List<string> literals = new List<string>();
         public readonly List<string> indentificators = new List<string>();
-        public readonly List<char> limiters = new List<char>() { '=', '<', '>', '+', '-', '*', '/', '\n', '(', ')' };
-        public readonly List<string> keyWords = new List<string>() { "Dim", "as", "integer", "char", "single", "string", "if", "then", "else", "end" };
+        public readonly List<string> limiters = new List<string>() {">=", "<=", "=", "<", ">", "+", "-", "*", "/", "\n", "(",")"};
+        public readonly List<string> keyWords = new List<string>() { "Dim", "as", "integer", "char", "single", "string", "if", "then", "else", "end", "expr" };
         public readonly List<Tuple<string, string>> lexemes = new List<Tuple<string, string>>();
-
         private enum TypeOfLexem
         {
             I,
@@ -108,9 +107,19 @@ namespace CourwWorkAutomataTheory
                                 case TypeOfLexem.R: type = "Разделитель"; break;
                             }
 
-                            lexemes.Add(new Tuple<string, string>(buffer, type));
-                            lexemes.Add(new Tuple<string, string>("\n", "Разделитель"));
-                            buffer = "";
+                            if (text[i-1] != ' ' && text[i - 1] != '\n')
+                            {
+                                lexemes.Add(new Tuple<string, string>(buffer, type));
+                                buffer = "";
+                            }
+
+                            if (text[i-1] != '\n' && lexemes[lexemes.Count-1].Item1 != "\n")
+                            {
+                                lexemes.Add(new Tuple<string, string>("\n", "Разделитель"));
+                                buffer = "";
+                            }
+
+
                             break;
                         }
 
@@ -136,8 +145,11 @@ namespace CourwWorkAutomataTheory
                                 break;
 
                             case TypeOfLexem.R:
-                                lexemes.Add(new Tuple<string, string>(buffer, "Разделитель"));
-                                buffer = symbol.ToString();
+                                if (buffer.Length > 1)
+                                    throw new Exception("Разделитель не может иметь более двух символов");
+                                buffer += symbol;
+
+                                folowLexemeType = TypeOfLexem.R;
                                 break;
                         }
 
@@ -169,19 +181,27 @@ namespace CourwWorkAutomataTheory
                 }
             }
 
-            switch (folowLexemeType)
+            if(buffer != "")
             {
-                case TypeOfLexem.I:
-                    lexemes.Add(new Tuple<string, string>(buffer, "Идентификатор"));
-                    break;
+                switch (folowLexemeType)
+                {
+                    case TypeOfLexem.I:
+                        lexemes.Add(new Tuple<string, string>(buffer, "Идентификатор"));
+                        break;
 
-                case TypeOfLexem.L:
-                    lexemes.Add(new Tuple<string, string>(buffer, "Литерал"));
-                    break;
+                    case TypeOfLexem.L:
+                        lexemes.Add(new Tuple<string, string>(buffer, "Литерал"));
+                        break;
 
-                case TypeOfLexem.R:
-                    lexemes.Add(new Tuple<string, string>(buffer, "Разделитель"));
-                    break;
+                    case TypeOfLexem.R:
+                        lexemes.Add(new Tuple<string, string>(buffer, "Разделитель"));
+                        break;
+                }
+            }
+
+            if (lexemes[lexemes.Count-1].Item1 != "\n")
+            {
+                lexemes.Add(new Tuple<string, string>("\n", "Разделитель"));
             }
 
             return lexemes;
@@ -206,7 +226,7 @@ namespace CourwWorkAutomataTheory
                 symType = "Space";
             }
 
-            if (limiters.Contains(sym))
+            if (limiters.Contains(sym.ToString()))
             {
                 symType = "Lemiter";
             }
@@ -251,21 +271,20 @@ namespace CourwWorkAutomataTheory
                         }
                         break;
                     case "Литерал":
-                        int intValue = int.Parse(value);
-                        if (!literals.Contains(intValue))
+                        if (!literals.Contains(value))
                         {
-                            literals.Add(intValue);
-                            resultList.Add(new Tuple<string, int>("L", literals.IndexOf(intValue)));
+                            literals.Add(value);
+                            resultList.Add(new Tuple<string, int>("L", literals.IndexOf(value)));
                         }
                         else
                         {
-                            resultList.Add(new Tuple<string, int>("L", literals.IndexOf(intValue)));
+                            resultList.Add(new Tuple<string, int>("L", literals.IndexOf(value)));
                         }
                         break;
                     case "Разделитель":
                         if (value.Length <= 2)
                         {
-                            resultList.Add(new Tuple<string, int>("R", limiters.IndexOf(value[0])));
+                            resultList.Add(new Tuple<string, int>("R", limiters.IndexOf(value)));
                         }
                         else
                         {
