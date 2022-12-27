@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace CourwWorkAutomataTheory
 {
@@ -37,6 +36,17 @@ namespace CourwWorkAutomataTheory
             //	Инициализация стека, содержащий операторы в виде символов
             Stack<string> stack = new Stack<string>();
 
+            if(infixExpr.Count > 1)
+            {
+                for (int i = 0; i < infixExpr.Count-1; i++)
+                {
+                    if(lexemeAnalyzer.indentificators.Contains(infixExpr[i]) && lexemeAnalyzer.indentificators.Contains(infixExpr[i+1]) || lexemeAnalyzer.literals.Contains(infixExpr[i]) && lexemeAnalyzer.literals.Contains(infixExpr[i + 1]) || lexemeAnalyzer.literals.Contains(infixExpr[i]) && lexemeAnalyzer.indentificators.Contains(infixExpr[i + 1]) || lexemeAnalyzer.indentificators.Contains(infixExpr[i]) && lexemeAnalyzer.literals.Contains(infixExpr[i + 1]) || lexemeAnalyzer.limiters.Contains(infixExpr[i]) && lexemeAnalyzer.limiters.Contains(infixExpr[i+1])) {
+                        throw new Exception("Ошибка в арифметичекском выражении!");
+                    }
+                    
+                }
+            }
+
             List<string> postFixExprList = new List<string>();
 
             //	Перебираем строку
@@ -71,11 +81,11 @@ namespace CourwWorkAutomataTheory
 
                     catch
                     {
-                        throw new Exception("Отсутвует открывающая скобка в арифметиском выражении");
+                        throw new Exception("Отсутвует открывающая скобка в арифметическом выражении!");
                     }
                 }
                 //	Проверяем, содержится ли символ в списке операторов
-                else if (operationPriority.ContainsKey(c) && !operationPriority.ContainsKey(infixExpr[i+1]))
+                else if (operationPriority.ContainsKey(c))
                 {
                     //	Если да, то сначала проверяем
                     string op = c;
@@ -86,14 +96,21 @@ namespace CourwWorkAutomataTheory
                     //	Заносим в стек оператор
                     stack.Push(op);
                 }
-                else
+                else 
                 {
-                    throw new Exception("Ошибка в арефметическом выражении");
+                    throw new Exception("Ошибка в арифметическом выражении!");
                 }
             }
+
             //	Заносим все оставшиеся операторы из стека в выходную строку
             foreach (string op in stack)
+            {
+                if(stack.Peek() == infixExpr[infixExpr.Count-1]) {
+                    throw new Exception("Ошибка в арифметическом выражении");
+                }
                 postFixExprList.Add(op);
+            }
+                
             //	Возвращаем выражение в постфиксной записи
             return postFixExprList; 
         }
@@ -103,7 +120,6 @@ namespace CourwWorkAutomataTheory
             string log = "";
             //	Стек для хранения чисел
             Stack<string> locals = new Stack<string>();
-            //	Счётчик действий
 
             postfixExprList = ToPostfix(infixExpr);
 
@@ -137,7 +153,7 @@ namespace CourwWorkAutomataTheory
                     }
                     else
                     {
-                        throw new Exception("Отсутсвует закрывающая скобка");
+                        throw new Exception("Отсутсвует закрывающая скобка!");
                     }
                     locals.Push("OP"+ counter);
 

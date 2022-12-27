@@ -218,8 +218,13 @@ namespace CourwWorkAutomataTheory
 
             }
             ExpressionAnalyzer expression = new ExpressionAnalyzer(expr, lexeme);
-            log += $"Выражение №{exprCounter}:\n" + expression.Calc() + "\n";
-            exprCounter++;
+            string outStr = expression.Calc();
+            if(outStr != "")
+            {
+                log += $"Выражение №{exprCounter}:\n" + outStr + "\n";
+                exprCounter++;
+            }
+               
             Convolution(count, "expr");
         }
 

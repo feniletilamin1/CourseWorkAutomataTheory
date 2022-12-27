@@ -220,28 +220,33 @@ namespace CourwWorkAutomataTheory
             return lexemes;
         }
 
-        public string CheckLexeme(char sym)
+        private string CheckLexeme(char sym)
         {
-            string symType = "";
+            string symType;
 
             if (char.IsDigit(sym))
             {
                 symType = "Digit";
             }
 
-            if (char.IsLetter(sym))
+            else if (char.IsLetter(sym))
             {
                 symType = "Letter";
             }
 
-            if (sym == ' ')
+            else if (sym == ' ')
             {
                 symType = "Space";
             }
 
-            if (limiters.Contains(sym.ToString()))
+            else if (limiters.Contains(sym.ToString()))
             {
                 symType = "Lemiter";
+            }
+
+            else
+            {
+                throw new Exception("Запрещенный символ!");
             }
             return symType;
         }

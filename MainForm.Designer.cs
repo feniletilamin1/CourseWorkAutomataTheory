@@ -46,6 +46,9 @@ namespace CourwWorkAutomataTheory
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_do = new System.Windows.Forms.Button();
             this.btn_download = new System.Windows.Forms.Button();
+            this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -66,6 +69,9 @@ namespace CourwWorkAutomataTheory
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.richTextBoxLog);
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.richTextBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
@@ -109,9 +115,9 @@ namespace CourwWorkAutomataTheory
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(476, 3);
+            this.richTextBox1.Location = new System.Drawing.Point(476, 30);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(506, 526);
+            this.richTextBox1.Size = new System.Drawing.Size(506, 269);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
             // 
@@ -223,6 +229,32 @@ namespace CourwWorkAutomataTheory
             this.btn_download.UseVisualStyleBackColor = true;
             this.btn_download.Click += new System.EventHandler(this.btn_download_Click);
             // 
+            // richTextBoxLog
+            // 
+            this.richTextBoxLog.Location = new System.Drawing.Point(476, 341);
+            this.richTextBoxLog.Name = "richTextBoxLog";
+            this.richTextBoxLog.Size = new System.Drawing.Size(512, 185);
+            this.richTextBoxLog.TabIndex = 3;
+            this.richTextBoxLog.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(476, 321);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(203, 17);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Разбор сложного выражения:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(476, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(126, 17);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Программный код";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -236,6 +268,7 @@ namespace CourwWorkAutomataTheory
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
@@ -263,6 +296,9 @@ namespace CourwWorkAutomataTheory
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.Button btn_do;
         private System.Windows.Forms.Button btn_download;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RichTextBox richTextBoxLog;
     }
 }
 

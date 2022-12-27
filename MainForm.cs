@@ -22,6 +22,7 @@ namespace CourwWorkAutomataTheory
         private void btn_download_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "txt Files|*.txt";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string allText = File.ReadAllText(openFileDialog.FileName);
@@ -31,6 +32,7 @@ namespace CourwWorkAutomataTheory
 
         private void btn_do_Click(object sender, EventArgs e)
         {
+            richTextBoxLog.Clear();
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
             try { 
@@ -92,25 +94,18 @@ namespace CourwWorkAutomataTheory
                         dataGridView3.Rows[i].Cells[3].Value = "\\n";
                     }
                 }
+
+                syntax.CheckSyntax(list2, lexeme);
+                richTextBoxLog.Text = syntax.log;
+                syntax.Reset();
+                MessageBox.Show("Разбор прошёл успешно", "Успешно!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                richTextBoxLog.Clear();
                 dataGridView1.Rows.Clear();
                 dataGridView2.Rows.Clear();
-            }
-
-            try
-            {
-                syntax.CheckSyntax(list2, lexeme);
-                MessageBox.Show("Разбор прошёл успешно", "Успешно!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                MessageBox.Show(syntax.log);
-                syntax.Reset();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 syntax.Reset();
             }
 
