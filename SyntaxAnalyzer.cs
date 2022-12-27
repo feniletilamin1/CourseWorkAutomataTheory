@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
+
 namespace CourwWorkAutomataTheory
 {
     public class SyntaxAnalyzer
     {
+        int exprCounter = 1;
         int i;
         int state = 0;
         int rowNum = 1;
+        public string log;
 
         List<Tuple<string, int>> list;
 
         LexemeAnalyzer lexeme;
 
         bool isEnd = false;
-        Stack<string> stack = new Stack<string>();
-        Stack<int> stateStack = new Stack<int>();
+        readonly Stack<string> stack = new Stack<string>();
+        readonly Stack<int> stateStack = new Stack<int>();
 
         public void CheckSyntax(List<Tuple<string, int>> list, LexemeAnalyzer lexeme)
         {
@@ -166,6 +170,17 @@ namespace CourwWorkAutomataTheory
             rowNum = 1;
         }
 
+        public void Reset()
+        {
+            i = 0;
+            rowNum = 1;
+            stack.Clear();
+            state = 0;
+            stateStack.Clear();
+            log = "";
+            exprCounter = 1;
+        }
+
         private void Shift()
         {
             stack.Push(lexeme.lexemes[i].Item1);
@@ -190,13 +205,21 @@ namespace CourwWorkAutomataTheory
             stack.Push(NotATerminal);
         }
 
-        private void Expr(int count)
+        private void Expr()
         {
-            for (int i = 0; i < count; i++)
+            int count = 0;
+            List<string> expr = new List<string>();
+            while(lexeme.lexemes[i].Item1 != "\n" && i-1 <= lexeme.lexemes.Count)
             {
+                expr.Add(lexeme.lexemes[i].Item1);
                 Shift();
                 stateStack.Push(100);
+                count++;
+
             }
+            ExpressionAnalyzer expression = new ExpressionAnalyzer(expr, lexeme);
+            log += $"Выражение №{exprCounter}:\n" + expression.Calc() + "\n";
+            exprCounter++;
             Convolution(count, "expr");
         }
 
@@ -258,7 +281,7 @@ namespace CourwWorkAutomataTheory
                 case "if": GoState(6); break;
                 case "Dim": GoState(7); break;
                 default:
-                    Eror("if,Dim, Индентификатор");
+                    Eror("if,Dim,Индентификатор");
                     break;
             }
         }
@@ -453,7 +476,7 @@ namespace CourwWorkAutomataTheory
         {
             switch (stack.Peek())
             {
-                case "=": Expr(3); break;
+                case "=": Expr(); break;
                 case "expr": GoState(28); break;
                 default:
                     Eror("=,expr");

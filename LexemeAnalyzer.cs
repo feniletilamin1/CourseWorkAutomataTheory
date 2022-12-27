@@ -145,8 +145,21 @@ namespace CourwWorkAutomataTheory
                                 break;
 
                             case TypeOfLexem.R:
-                                if (buffer.Length > 1)
+                                if (buffer.Length > 2)
                                     throw new Exception("Разделитель не может иметь более двух символов");
+                                string str = buffer + symbol;
+                                if(limiters.Contains(str))
+                                {
+                                    lexemes.Add(new Tuple<string, string>(str, "Разделитель"));
+                                    buffer = "";
+                                    break;
+                                }
+                                else
+                                {
+                                    lexemes.Add(new Tuple<string, string>(buffer, "Разделитель"));
+                                    buffer = "";
+                                }
+
                                 buffer += symbol;
 
                                 folowLexemeType = TypeOfLexem.R;

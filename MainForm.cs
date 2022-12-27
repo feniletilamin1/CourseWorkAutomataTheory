@@ -8,7 +8,8 @@ namespace CourwWorkAutomataTheory
 {
     public partial class MainForm : Form
     {
-        SyntaxAnalyzer syntax = new SyntaxAnalyzer();
+        readonly SyntaxAnalyzer syntax = new SyntaxAnalyzer();
+
         readonly LexemeAnalyzer lexeme = new LexemeAnalyzer();
         List<Tuple<string, string>> list = new List<Tuple<string, string>>();
         List<Tuple<string, int>> list2 = new List<Tuple<string, int>>();
@@ -97,19 +98,22 @@ namespace CourwWorkAutomataTheory
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dataGridView1.Rows.Clear();
                 dataGridView2.Rows.Clear();
-                return;
             }
 
             try
             {
                 syntax.CheckSyntax(list2, lexeme);
                 MessageBox.Show("Разбор прошёл успешно", "Успешно!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(syntax.log);
+                syntax.Reset();
             }
 
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                syntax.Reset();
             }
+
         }
 
 
