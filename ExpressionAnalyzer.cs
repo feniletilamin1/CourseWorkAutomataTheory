@@ -158,7 +158,7 @@ namespace CourwWorkAutomataTheory
                     }
                     else
                     {
-                        throw new Exception("Отсутсвует закрывающая скобка в арифметическом выражении!");
+                        throw new Exception("Отсутсвует закрывающая скобка или ошибка в арифметичексом выражении!");
                     }
                     locals.Push("OP"+ counter);
 
