@@ -29,7 +29,7 @@ namespace CourwWorkAutomataTheory
 
             if (Regex.Matches(text, pattern).Count > 0)
             {
-                throw new Exception("Русские буквы недопустимы");
+                throw new Exception("Русские буквы недопустимы!");
             }
 
             for (int i = 0; i < text.Length; i++)

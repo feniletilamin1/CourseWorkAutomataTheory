@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace CourwWorkAutomataTheory
 {
@@ -89,7 +88,7 @@ namespace CourwWorkAutomataTheory
                         State18();
                         break;
                     case 19:
-                            State19();
+                        State19();
                         break;
                     case 20:
                         State20();
@@ -168,6 +167,13 @@ namespace CourwWorkAutomataTheory
 
             isEnd = false;
             rowNum = 1;
+
+            if(stack.Count > 1)
+            {
+                Reset();
+                throw new Exception("Встретилось излишнее ключевое слово!");
+            }
+
         }
 
         public void Reset()
@@ -218,7 +224,7 @@ namespace CourwWorkAutomataTheory
 
             }
             ExpressionAnalyzer expression = new ExpressionAnalyzer(expr, lexeme);
-            string outStr = expression.Calc();
+            string outStr = expression.Analyze();
             if(outStr != "")
             {
                 log += $"Выражение №{exprCounter}:\n" + outStr + "\n";
@@ -277,7 +283,7 @@ namespace CourwWorkAutomataTheory
 
             switch (stack.Peek())
             {
-                case "<программа>": isEnd = true; stack.Clear(); stateStack.Clear(); i = 0; break;
+                case "<программа>": isEnd = true; break;
                 case "<список_операторов>": GoState(1); break;
                 case "<оператор>": GoState(2); break;
                 case "<условие>": GoState(3); break;
@@ -301,7 +307,7 @@ namespace CourwWorkAutomataTheory
 
             switch (stack.Peek())
             {
-                case "<список_операторов>": if (i != list.Count) { Shift(); } else { Convolution(1, "<программа>"); } ; break;
+                case "<список_операторов>": if (i < lexeme.lexemes.Count-1) { Shift(); } else { Convolution(1, "<программа>"); } break;
                 case "<оператор>": GoState(9); break;
                 case "<условие>": GoState(3); break;
                 case "<присвоение>": GoState(4); break;

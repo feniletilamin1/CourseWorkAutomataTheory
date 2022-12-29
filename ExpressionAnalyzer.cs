@@ -7,9 +7,9 @@ namespace CourwWorkAutomataTheory
     {
         int counter = 0;
         readonly LexemeAnalyzer lexemeAnalyzer = new LexemeAnalyzer();
-        public List<string> infixExpr { get; private set; }
+        private readonly List<string> infixExpr;
         //	Хранит постфиксное выражение
-        List<string> postfixExprList { get; set; }
+        List<string> postfixExprList;
 
         //	Список и приоритет операторов
         private readonly Dictionary<string, int> operationPriority = new Dictionary<string, int>()
@@ -22,7 +22,6 @@ namespace CourwWorkAutomataTheory
             { "^", 3 }
         };
 
-        //	Конструктор класса
         public ExpressionAnalyzer(List<string> expression, LexemeAnalyzer lexeme)
         {
             //	Инициализируем поля
@@ -40,7 +39,13 @@ namespace CourwWorkAutomataTheory
             {
                 for (int i = 0; i < infixExpr.Count-1; i++)
                 {
-                    if(lexemeAnalyzer.indentificators.Contains(infixExpr[i]) && lexemeAnalyzer.indentificators.Contains(infixExpr[i+1]) || lexemeAnalyzer.literals.Contains(infixExpr[i]) && lexemeAnalyzer.literals.Contains(infixExpr[i + 1]) || lexemeAnalyzer.literals.Contains(infixExpr[i]) && lexemeAnalyzer.indentificators.Contains(infixExpr[i + 1]) || lexemeAnalyzer.indentificators.Contains(infixExpr[i]) && lexemeAnalyzer.literals.Contains(infixExpr[i + 1]) || lexemeAnalyzer.limiters.Contains(infixExpr[i]) && lexemeAnalyzer.limiters.Contains(infixExpr[i+1])) {
+                    if((infixExpr[i] == "+" && infixExpr[i+1] == "+") || (infixExpr[i] == "-" && infixExpr[i + 1] == "-") || 
+                        (infixExpr[i] == "*" && infixExpr[i + 1] == "*") || (infixExpr[i] == "/" && infixExpr[i + 1] == "/") || 
+                        (lexemeAnalyzer.indentificators.Contains(infixExpr[i]) && lexemeAnalyzer.indentificators.Contains(infixExpr[i+1])
+                        || (lexemeAnalyzer.literals.Contains(infixExpr[i]) && lexemeAnalyzer.literals.Contains(infixExpr[i + 1])) ||
+                        (lexemeAnalyzer.indentificators.Contains(infixExpr[i]) && lexemeAnalyzer.literals.Contains(infixExpr[i + 1])) ||
+                        (lexemeAnalyzer.literals.Contains(infixExpr[i]) && lexemeAnalyzer.indentificators.Contains(infixExpr[i + 1]))) ||
+                        infixExpr[i + 1] == "(" && (lexemeAnalyzer.literals.Contains(infixExpr[i]) || lexemeAnalyzer.indentificators.Contains(infixExpr[i]))) {
                         throw new Exception("Ошибка в арифметичекском выражении!");
                     }
                     
@@ -115,7 +120,7 @@ namespace CourwWorkAutomataTheory
             return postFixExprList; 
         }
 
-        public string Calc()
+        public string Analyze()
         {
             string log = "";
             //	Стек для хранения чисел
@@ -153,12 +158,12 @@ namespace CourwWorkAutomataTheory
                     }
                     else
                     {
-                        throw new Exception("Отсутсвует закрывающая скобка!");
+                        throw new Exception("Отсутсвует закрывающая скобка в арифметическом выражении!");
                     }
                     locals.Push("OP"+ counter);
 
                     //	Отчитываемся пользователю о проделанной работе
-                    log += $"{first} {c} {second} = {locals.Peek()}\n";
+                    log += $"{locals.Peek()} =  {first} {c} {second}\n";
                 }
             }
             return log;

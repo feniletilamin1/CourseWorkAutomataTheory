@@ -21,8 +21,10 @@ namespace CourwWorkAutomataTheory
 
         private void btn_download_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "txt Files|*.txt";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "txt Files|*.txt"
+            };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string allText = File.ReadAllText(openFileDialog.FileName);
