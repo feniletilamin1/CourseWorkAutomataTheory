@@ -145,7 +145,7 @@ namespace CourwWorkAutomataTheory
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(506, 269);
             this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = "";
+            this.richTextBox1.Text = "Dim a as integer\na=8\nif a>b then\n x=4*y+a/2\n y=a\nelse\n x=0\nend if";
             // 
             // tabPage2
             // 

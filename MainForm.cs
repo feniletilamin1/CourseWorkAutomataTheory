@@ -16,7 +16,6 @@ namespace CourwWorkAutomataTheory
         public MainForm()
         {
             InitializeComponent();
-            richTextBox1.Text = File.ReadAllText(@"C:\Users\PC\Documents\Курсовая Автоматы\CourseWork\CourseWorkAutomataTheory\bin\Debug\code.txt"); // <<<<<<<<<<<<<<<<<<<<<
         }
 
         private void btn_download_Click(object sender, EventArgs e)
