@@ -31,6 +31,9 @@ namespace CourwWorkAutomataTheory
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.LexemeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TypeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,9 +49,6 @@ namespace CourwWorkAutomataTheory
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_do = new System.Windows.Forms.Button();
             this.btn_download = new System.Windows.Forms.Button();
-            this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -81,6 +81,32 @@ namespace CourwWorkAutomataTheory
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Лексич. анализ табл 1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(476, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(126, 17);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Программный код";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(476, 321);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(203, 17);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Разбор сложного выражения:";
+            // 
+            // richTextBoxLog
+            // 
+            this.richTextBoxLog.Location = new System.Drawing.Point(476, 341);
+            this.richTextBoxLog.Name = "richTextBoxLog";
+            this.richTextBoxLog.Size = new System.Drawing.Size(512, 185);
+            this.richTextBoxLog.TabIndex = 3;
+            this.richTextBoxLog.Text = "";
             // 
             // dataGridView1
             // 
@@ -229,32 +255,6 @@ namespace CourwWorkAutomataTheory
             this.btn_download.UseVisualStyleBackColor = true;
             this.btn_download.Click += new System.EventHandler(this.btn_download_Click);
             // 
-            // richTextBoxLog
-            // 
-            this.richTextBoxLog.Location = new System.Drawing.Point(476, 341);
-            this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(512, 185);
-            this.richTextBoxLog.TabIndex = 3;
-            this.richTextBoxLog.Text = "";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(476, 321);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(203, 17);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Разбор сложного выражения:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(476, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 17);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Программный код";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -264,8 +264,9 @@ namespace CourwWorkAutomataTheory
             this.Controls.Add(this.btn_download);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Транслятор VB";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

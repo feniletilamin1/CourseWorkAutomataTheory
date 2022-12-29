@@ -264,7 +264,7 @@ namespace CourwWorkAutomataTheory
             stateStack.Clear();
             i = 0;
 
-            throw new Exception($"Ошибка на строке {rowNum}\nВстретилось: {meet}\n\nОжидалось: \n{expected}.");
+            throw new Exception($"Ошибка на строке {rowNum}\nВстретилось: {meet}\n\nОжидалось: \n{expected}");
         }
 
         private void State0()

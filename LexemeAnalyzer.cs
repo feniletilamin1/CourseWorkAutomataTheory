@@ -269,7 +269,7 @@ namespace CourwWorkAutomataTheory
                         }
                         else if (!keyWords.Contains(value))
                         {
-                            if (value.Length <= 6)
+                            if (value.Length <= 8)
                             {
                                 if (!indentificators.Contains(value))
                                 {
@@ -284,7 +284,7 @@ namespace CourwWorkAutomataTheory
 
                             else
                             {
-                                throw new Exception("Имя переменной не должна превышать длину 6-ти символов");
+                                throw new Exception("Идентификатор не должен превышать длину 8-и символов");
                             }
                         }
                         break;
